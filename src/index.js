@@ -1,5 +1,7 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
+import templateOneCountry from './templateOneCountry';
+import fetchCountries from './fetchCountries';
 
 const DEBOUNCE_DELAY = 300;
 const refs = {
@@ -14,15 +16,32 @@ refs.inputField.addEventListener(
   debounce(onInputSearch, DEBOUNCE_DELAY)
 );
 
-function fetchCountries(name) {
-  const r = fetch(`https://restcountries.com/v3.1/name/${name}`).then(data => {
-    console.log(data);
-  });
-}
-
-// fetchCountries('peru');
+// console.log(fetchCountries('ukr'));
 
 function onInputSearch(e) {
-  const result = fetchCountries(e.target.value);
-  console.log(result);
+  let name = e.target.value.trim();
+  if (name === ``) {
+    console.log('Need more symbols');
+  } else {
+    fetchCountries(name)
+      .then(county => {
+        if (county.length > 10) {
+          console.log('need more params');
+        } else if (county.length > 2 && county.length < 10) {
+          console.log('norm');
+        } else if (county.length === 1) {
+          console.log('ok');
+          templateOneCountry(county);
+        } else {
+          console.log('Not find');
+        }
+      })
+      .catch(error => {
+        return error;
+      });
+  }
+
+  // console.log(find);
+
+  // console.log(fetchCountries(name));
 }
