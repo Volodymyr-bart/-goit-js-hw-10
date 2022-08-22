@@ -23,9 +23,7 @@ function onInputSearch(e) {
   refs.countryList.innerHTML = ``;
   refs.countryInfo.innerHTML = ``;
   if (name === ``) {
-    Notiflix.Notify.info(
-      'Too many matches found. Please enter a more specific name.'
-    );
+    Notiflix.Notify.info('Please write.');
   } else {
     fetchCountries(name)
       .then(country => {
@@ -33,7 +31,8 @@ function onInputSearch(e) {
           Notiflix.Notify.info(
             'Too many matches found. Please enter a more specific name.'
           );
-        } else if (country.length > 2 && country.length < 10) {
+          console.log(country.length);
+        } else if (country.length >= 2 && country.length <= 10) {
           for (let i = 0; i < country.length; i += 1) {
             refs.countryList.insertAdjacentHTML(
               `beforeend`,
@@ -41,14 +40,15 @@ function onInputSearch(e) {
             );
           }
         } else if (country.length === 1) {
+          console.log('MAtch');
           refs.countryInfo.innerHTML = templateOneCountry(country);
         } else {
           Notiflix.Notify.failure('Oops, there is no country with that name');
         }
       })
       .catch(error => {
-        Notiflix.Notify.failure('Oops, there is no country with that name');
-        return error;
+        Notiflix.Notify.failure(`Oops ${error}`);
+        // return error;
       });
   }
 }
