@@ -1,5 +1,6 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
+import templateCountries from './templateCountries';
 import templateOneCountry from './templateOneCountry';
 import fetchCountries from './fetchCountries';
 
@@ -28,16 +29,15 @@ function onInputSearch(e) {
     fetchCountries(name)
       .then(country => {
         if (country.length > 10) {
-          console.log('need more params');
         } else if (country.length > 2 && country.length < 10) {
-          console.log('norm');
+          for (let i = 0; i < country.length; i += 1) {
+            refs.countryList.insertAdjacentHTML(
+              `beforeend`,
+              templateCountries(country[i])
+            );
+          }
         } else if (country.length === 1) {
-          console.log('ok');
-          templateOneCountry(country);
           refs.countryInfo.innerHTML = templateOneCountry(country);
-          // const flagImg = country[0].flags.png;
-          // console.log(flagImg);
-          // refs.background.style.backgroundImage = `url(${flagImg})`;
         } else {
           console.log('Not find');
         }
