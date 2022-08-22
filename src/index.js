@@ -20,18 +20,24 @@ refs.inputField.addEventListener(
 
 function onInputSearch(e) {
   let name = e.target.value.trim();
+  refs.countryList.innerHTML = ``;
+  refs.countryInfo.innerHTML = ``;
   if (name === ``) {
     console.log('Need more symbols');
   } else {
     fetchCountries(name)
-      .then(county => {
-        if (county.length > 10) {
+      .then(country => {
+        if (country.length > 10) {
           console.log('need more params');
-        } else if (county.length > 2 && county.length < 10) {
+        } else if (country.length > 2 && country.length < 10) {
           console.log('norm');
-        } else if (county.length === 1) {
+        } else if (country.length === 1) {
           console.log('ok');
-          templateOneCountry(county);
+          templateOneCountry(country);
+          refs.countryInfo.innerHTML = templateOneCountry(country);
+          // const flagImg = country[0].flags.png;
+          // console.log(flagImg);
+          // refs.background.style.backgroundImage = `url(${flagImg})`;
         } else {
           console.log('Not find');
         }
