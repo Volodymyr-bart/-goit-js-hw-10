@@ -40,7 +40,6 @@ function onInputSearch(e) {
             );
           }
         } else if (country.length === 1) {
-          console.log('MAtch');
           refs.countryInfo.innerHTML = templateOneCountry(country);
         } else {
           Notiflix.Notify.failure('Oops, there is no country with that name');
@@ -48,7 +47,6 @@ function onInputSearch(e) {
       })
       .catch(error => {
         Notiflix.Notify.failure(`Oops ${error}`);
-        // return error;
       });
   }
 }
